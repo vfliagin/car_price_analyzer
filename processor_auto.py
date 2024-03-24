@@ -9,14 +9,10 @@ import json
 import pandas as pd
 from time import sleep
 from confluent_kafka import Producer, Consumer
-#from confluent_kafka.admin import AdminClient, NewTopic
 
 class CarProcessor():
     
     def __init__(self, bootstrap_servers, consume_topic, produce_topic, group_id):
-        #self.admin_client = AdminClient({"bootstrap.servers": "localhost:9092"})
-        
-        
         self.conf_cons = {'bootstrap.servers': bootstrap_servers, 'group.id': group_id}
         self.conf_prod = {'bootstrap.servers': bootstrap_servers}
         
