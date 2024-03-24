@@ -5,6 +5,7 @@ Created on Sun Mar 24 02:55:53 2024
 @author: CoffeeDrinker
 """
 
+import time
 import json
 import pickle
 import pandas as pd
@@ -29,9 +30,10 @@ class CarAnalyzer():
         with open('encoder.pkl', 'rb') as f:
             self.encoder = pickle.load(f)
         
-            
         self.cat_rows = ['make', 'model', 'trim', 'body',
                          'transmission', 'state', 'color', 'interior']
+    
+        self.reasonable_approximations = {'year': 2013, 'condition': 35, 'odometer': 10000, 'mmr': 20000}
     
     def analyze_row(self, car_dict):
         
@@ -44,7 +46,11 @@ class CarAnalyzer():
         
         for col in df.columns:
             if col not in self.cat_rows:
-                df[col] = df[col].astype('int')
+                try:
+                    df[col] = df[col].astype('int')
+                except:
+                    print(f'Unable to convert column {col} to number')
+                    df[col] = self.reasonable_approximations[col]
         
         try:
             df_trans = self.encoder.transform(df)
@@ -61,7 +67,9 @@ class CarAnalyzer():
         for col in car_dict:
             car_dict[col] = car_dict[col][0]
         
+  
         car_dict['price'] = int(pred[0])
+        
         
         print(car_dict)
         
@@ -80,6 +88,7 @@ class CarAnalyzer():
                                               key='1', value=json.dumps(analyzed_data))
                     self.producer.flush()
                     print('analyzed:', analyzed_data)
+                    time.sleep(1)
         
 if __name__ == '__main__':
     
