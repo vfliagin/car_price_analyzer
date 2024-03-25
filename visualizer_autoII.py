@@ -56,18 +56,6 @@ while True:
     brand_df = pd.DataFrame(brand_data)
     
     with chart_holder.container():
-        
-        price_col, made_col = st.columns(2)
-        
-        with price_col:
-            st.markdown("### Prices")
-            fig = px.line(price_df, x='time', y='price')
-            st.write(fig)
-            
-        with made_col:
-            st.markdown("### Car brands")
-            fig2 = px.histogram(data_frame=brand_data, x="brand")
-            st.write(fig2)
     
         usa_col, empty_col = st.columns(2)
     
@@ -94,7 +82,20 @@ while True:
                                range_color=(0, max_color),
                                scope="usa")
     
-            st.write(fig3)
+            st.write(fig3)    
+    
+        with empty_col:
+            st.markdown("### Prices")
+            fig = px.line(price_df, x='time', y='price')
+            st.write(fig)
+    
+        price_col, made_col = st.columns(2)
+            
+        with made_col:
+            st.markdown("### Car brands")
+            fig2 = px.histogram(data_frame=brand_data, x="brand")
+            st.write(fig2)
+    
          
     sleep(1)
 
