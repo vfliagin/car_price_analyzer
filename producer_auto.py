@@ -8,7 +8,6 @@ import csv
 import json
 from time import sleep
 from confluent_kafka import Producer
-#from confluent_kafka.admin import AdminClient, NewTopic
 
 class CarProducer():
     
