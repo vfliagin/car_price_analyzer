@@ -12,12 +12,6 @@ from confluent_kafka import Producer
 class CarProducer():
     
     def __init__(self, bootstrap_servers, topic, file_path):
-        """
-        self.admin_client = AdminClient({"bootstrap.servers": "localhost:9092"})
-        topic_list = []
-        topic_list.append(NewTopic(topic, 1, 1))
-        self.admin_client.create_topics(topic_list)
-        """
         self.conf = {'bootstrap.servers': bootstrap_servers}
         self.topic = topic
         self.file_path = file_path
