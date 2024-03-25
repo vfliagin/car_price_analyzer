@@ -6,6 +6,7 @@ Created on Sat Mar 23 18:57:30 2024
 """
 import csv
 import json
+import zipfile
 from time import sleep
 from confluent_kafka import Producer
 
@@ -37,6 +38,9 @@ if __name__ == '__main__':
     bootstrap_servers = 'localhost:9095'
     topic = 'new_cars_topic'
     file_path = 'car_prices.csv'
+
+    with zipfile.ZipFile("car_prices.zip","r") as zip_ref:
+        zip_ref.extractall()
     
     prod = CarProducer(bootstrap_servers, topic, file_path)
     prod.simulate_data_collecting()
