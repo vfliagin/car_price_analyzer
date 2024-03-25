@@ -73,6 +73,8 @@ while True:
     
         with usa_col:
     
+            max_color = 10        
+    
             location = st.session_state["location"]
             loc_data = {'location': location}
             loc_df = pd.DataFrame(loc_data)
@@ -82,16 +84,17 @@ while True:
     
             states = [state.upper() for state in states]
        
+            if max(counts) > max_color:
+                max_color = max(counts)
     
             st.markdown("### Offer location")
             fig3 = px.choropleth(locations=states, color = counts,
                                locationmode="USA-states",
                                color_continuous_scale = 'greens',
-                               range_color=(0, 10),
+                               range_color=(0, max_color),
                                scope="usa")
     
             st.write(fig3)
-            #chart_holder.plotly_chart(fig3)
          
     sleep(1)
 
